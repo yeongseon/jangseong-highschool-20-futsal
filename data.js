@@ -17,24 +17,30 @@ window.JS20_DATA = {
         { id: 'green', name: '그린팀', short: 'GREEN', score: null },
         { id: 'white', name: '화이트팀', short: 'WHITE', score: null }
       ],
-      // 참석자 16명 (단톡방 참석 명단 기준)
+      // 참석자 16명 (단톡방 참석 명단 기준). 사진은 졸업앨범 개인 사진.
       players: [
-        { name: '최영선', rating: 1 },
-        { name: '공영호', rating: 1 }, // 단톡방 이름 ㄱ영오
-        { name: '고재준', rating: 1 },
-        { name: '김동진', rating: 1 },
-        { name: '김상명', rating: 1 },
-        { name: '김성렬', rating: 1 },
-        { name: '김승현', rating: 1 },
-        { name: '김영수', rating: 1 },
-        { name: '김철민', rating: 1 },
-        { name: '김현수', rating: 1 },
-        { name: '박준철', rating: 1 },
-        { name: '서인원', rating: 1 },
-        { name: '최동영', rating: 1 },
-        { name: '최세호', rating: 1 },
-        { name: '최현석', rating: 1 },
-        { name: '한승효', rating: 1 }
+        { name: '최영선', photo: 'players/3-7-34.jpg', rating: 1 },
+        { name: '공영호', photo: 'players/3-1-01.jpg', rating: 1 }, // 단톡방 이름 ㄱ영오
+        { name: '고재준', photo: 'players/3-8-02.jpg', rating: 1 },
+        { name: '김동진', photo: 'players/3-7-05.jpg', rating: 1 },
+        { name: '김상명', photo: 'players/3-8-07.jpg', rating: 1 },
+        { name: '김성렬', photo: 'players/3-8-08.jpg', rating: 1 },
+        { name: '김승현', photo: 'players/3-8-09.jpg', rating: 1 },
+        { name: '김영수', photo: 'players/3-8-10.jpg', rating: 1 },
+        { name: '김철민', photo: 'players/3-7-10.jpg', rating: 1 },
+        { name: '김현수', photo: 'players/3-8-16.jpg', rating: 1 },
+        { name: '박준철', photo: 'players/3-7-16.jpg', rating: 1 },
+        { name: '서인원', photo: 'players/3-7-19.jpg', rating: 1 },
+        { name: '최동영', photo: 'players/3-7-33.jpg', rating: 1 },
+        { name: '최세호', photo: 'players/3-8-37.jpg', rating: 1 },
+        { name: '최현석', photo: 'players/3-7-36.jpg', rating: 1 },
+        { name: '한승효', photo: 'players/3-1-36.jpg', rating: 1 }
+      ],
+      // 상품은 모두 쿠팡 1만원권
+      prizes: [
+        { title: '풋살 승리팀', amount: 90000, note: '쿠팡 1만원권 9장' },
+        { title: '풋살 패배팀 득점왕', amount: 10000, note: '쿠팡 1만원권 1장' },
+        { title: '퀴즈 승리팀', amount: 90000, note: '쿠팡 1만원권 9장' }
       ],
       awards: {
         champion: null,

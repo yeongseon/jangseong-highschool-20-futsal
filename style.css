@@ -235,7 +235,18 @@ footer { padding:38px max(24px, calc((100vw - var(--max))/2)); border-top:1px so
 .roster-head b { font-size:19px; letter-spacing:1px; color:var(--lime); }
 .roster-head span { font-size:12px; color:#8fa39a; }
 .roster-list { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
-.roster-list li { display:flex; align-items:center; gap:12px; padding:13px 14px; border:1px solid rgba(255,255,255,.12); border-radius:10px; background:rgba(255,255,255,.03); font-size:15px; font-weight:800; }
+.roster-list li { display:flex; align-items:center; gap:12px; padding:10px 12px; border:1px solid rgba(255,255,255,.12); border-radius:10px; background:rgba(255,255,255,.03); font-size:15px; font-weight:800; }
+.face { width:40px; height:50px; object-fit:cover; border-radius:8px; border:1px solid rgba(255,255,255,.18); flex:none; }
 .roster-list i { font-style:normal; font-size:11px; color:var(--lime); opacity:.8; }
 @media (max-width:980px) { .roster-list { grid-template-columns:repeat(3,1fr); } }
 @media (max-width:680px) { .roster { padding:20px 16px; } .roster-list { grid-template-columns:repeat(2,1fr); } }
+.prize-board { margin-bottom:28px; padding:26px; border-radius:var(--radius); background:var(--deep-green); color:var(--white); }
+.prize-head { display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap; margin-bottom:18px; }
+.prize-head b { font-size:19px; letter-spacing:1px; color:var(--lime); }
+.prize-head span { font-size:12px; color:#a6d9b3; }
+.prize-list { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.prize { padding:18px 20px; border:1px solid rgba(255,255,255,.14); border-radius:12px; background:rgba(255,255,255,.04); }
+.prize small { display:block; font-size:13px; font-weight:800; color:#dce9e0; }
+.prize b { display:block; margin:8px 0 4px; font-size:34px; letter-spacing:-1px; color:var(--lime); }
+.prize p { margin:0; font-size:12px; color:#8fa39a; }
+@media (max-width:680px) { .prize-board { padding:20px 16px; } .prize-list { grid-template-columns:1fr; } }

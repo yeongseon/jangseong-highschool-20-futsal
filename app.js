@@ -52,6 +52,17 @@
   const cards = Array.from(document.querySelectorAll('.award-card b'));
   awards.forEach(([key, i]) => { if (e.awards[key]) cards[i].textContent = e.awards[key]; });
 
+  const prizes = Array.isArray(e.prizes) ? e.prizes : [];
+  const prizeBoard = $('prizeBoard');
+  if (prizeBoard && prizes.length) {
+    const won = (n) => `${(n / 10000).toLocaleString('ko-KR')}만원`;
+    prizeBoard.innerHTML = `
+      <div class="prize-head"><b>상품</b><span>쿠팡 상품권 · 총 ${won(prizes.reduce((sum, p) => sum + p.amount, 0))}</span></div>
+      <div class="prize-list">${prizes.map(p => `
+        <div class="prize"><small>${p.title}</small><b>${won(p.amount)}</b><p>${p.note}</p></div>`).join('')}
+      </div>`;
+  } else if (prizeBoard) prizeBoard.remove();
+
   const draftButton = $('draftButton');
   const draftMessage = $('draftMessage');
   const players = Array.isArray(e.players) ? e.players : [];
@@ -82,12 +93,16 @@
   // 팀을 나누기 전에는 참석자 전체 명단을 보여 준다
   function renderRoster() {
     const board = $('squadBoard');
-    const names = players.map(p => p.name).sort((a, b) => a.localeCompare(b, 'ko'));
+    const sorted = [...players].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
     board.innerHTML = `
       <div class="roster">
-        <div class="roster-head"><b>참석자 ${names.length}명</b><span>팀 추천 후 팀별 라인업이 공개됩니다</span></div>
-        <ol class="roster-list">${names.map((n, i) => `<li><i>${String(i + 1).padStart(2, '0')}</i>${n}</li>`).join('')}</ol>
+        <div class="roster-head"><b>참석자 ${sorted.length}명</b><span>팀 추천 후 팀별 라인업이 공개됩니다</span></div>
+        <ol class="roster-list">${sorted.map((p, i) => `<li>${face(p)}<i>${String(i + 1).padStart(2, '0')}</i>${p.name}</li>`).join('')}</ol>
       </div>`;
+  }
+
+  function face(p) {
+    return p.photo ? `<img class="face" src="./${p.photo}" alt="" loading="lazy" />` : '';
   }
 
   function renderSquads(teams) {
@@ -95,7 +110,7 @@
     board.innerHTML = teams.map((team, idx) => `
       <div style="padding:28px;min-width:0;">
         <div style="font:900 12px/1 Arial;letter-spacing:2px;color:${idx===0?'#b9ff4b':'#fff'};margin-bottom:18px">${idx===0?'그린팀':'화이트팀'}</div>
-        ${team.map((p,n)=>`<div style="display:flex;justify-content:space-between;gap:18px;padding:11px 0;border-top:1px solid rgba(255,255,255,.12);font-size:13px"><b>${String(n+1).padStart(2,'0')}</b><span>${p.name}</span></div>`).join('')}
+        ${team.map((p,n)=>`<div style="display:flex;justify-content:space-between;align-items:center;gap:18px;padding:11px 0;border-top:1px solid rgba(255,255,255,.12);font-size:13px"><b>${String(n+1).padStart(2,'0')}</b><span style="display:flex;align-items:center;gap:12px">${face(p)}${p.name}</span></div>`).join('')}
       </div>`).join('');
     board.style.gridTemplateColumns = '1fr 1fr';
     board.style.placeItems = 'stretch';
