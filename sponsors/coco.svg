@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <!-- 공개된 로고를 찾지 못해 만든 글자 로고 -->
+  <circle cx="60" cy="60" r="58" fill="#fff4d6"/>
+  <circle cx="60" cy="60" r="52" fill="none" stroke="#ff9f6b" stroke-width="2.5"/>
+  <path d="M60 34c-4-6-14-5-14 3 0 6 8 10 14 15 6-5 14-9 14-15 0-8-10-9-14-3z" fill="#ff7a7a"/>
+  <text x="60" y="80" text-anchor="middle" fill="#2f7fd1" font-family="Pretendard,'Noto Sans KR','Apple SD Gothic Neo',sans-serif" font-size="27" font-weight="900" letter-spacing="-1">코코</text>
+  <text x="60" y="97" text-anchor="middle" fill="#5d6b78" font-family="Pretendard,'Noto Sans KR','Apple SD Gothic Neo',sans-serif" font-size="10.5" font-weight="800">소아청소년과</text>
+</svg>

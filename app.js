@@ -50,7 +50,7 @@
   if (sponsorList && sponsors.length) {
     sponsorList.innerHTML = sponsors.map(s => `
       <a class="sponsor-card" href="${s.url}" target="_blank" rel="noopener noreferrer">
-        <span class="sponsor-icon" aria-hidden="true">${s.icon || '◆'}</span>
+        ${s.logo ? `<img class="sponsor-icon" src="./${s.logo}" alt="" loading="lazy" />` : `<span class="sponsor-icon" aria-hidden="true">${s.icon || '◆'}</span>`}
         <div><small>${s.type}</small><strong>${s.name}</strong>${s.branch ? `<em>${s.branch}</em>` : ''}</div>
         <b>↗</b>
       </a>`).join('');
