@@ -250,3 +250,15 @@ footer { padding:38px max(24px, calc((100vw - var(--max))/2)); border-top:1px so
 .prize b { display:block; margin:8px 0 4px; font-size:34px; letter-spacing:-1px; color:var(--lime); }
 .prize p { margin:0; font-size:12px; color:#8fa39a; }
 @media (max-width:680px) { .prize-board { padding:20px 16px; } .prize-list { grid-template-columns:1fr; } }
+.notice { position:fixed; inset:0; z-index:80; display:grid; place-items:center; padding:20px; background:rgba(2,12,7,.72); backdrop-filter:blur(6px); animation:noticeIn .25s ease-out; }
+.notice-card { position:relative; width:min(380px,100%); padding:30px 26px 22px; border-radius:22px; text-align:center; color:var(--ink); background:linear-gradient(180deg,#fffdf4,#f4f1e7); box-shadow:0 30px 80px rgba(0,0,0,.45); border:3px solid var(--lime); }
+.notice-x { position:absolute; right:12px; top:8px; border:0; background:none; font-size:28px; line-height:1; color:#68726c; cursor:pointer; }
+.notice-kicker { display:inline-block; padding:6px 14px; border-radius:999px; background:var(--school-green); color:#fff; font-size:13px; font-weight:800; letter-spacing:1px; }
+.notice-photo { display:block; width:150px; height:150px; margin:20px auto 14px; border-radius:50%; object-fit:cover; border:5px solid #fff; box-shadow:0 0 0 3px var(--school-green), 0 12px 30px rgba(0,0,0,.2); }
+.notice-card h3 { margin:0 0 10px; font-size:28px; letter-spacing:-1px; }
+.notice-card p { margin:0; font-size:14px; line-height:1.6; color:#33403a; }
+.notice-card .notice-footer { margin-top:10px; font-weight:800; color:var(--school-green); }
+.notice-actions { display:flex; justify-content:space-between; gap:10px; margin-top:22px; padding-top:16px; border-top:1px solid #ddd8cb; }
+.notice-actions button { border:0; background:none; font-size:13px; cursor:pointer; color:#68726c; }
+.notice-actions .notice-close { padding:9px 22px; border-radius:999px; background:var(--deep-green); color:#fff; font-weight:800; }
+@keyframes noticeIn { from { opacity:0; } to { opacity:1; } }

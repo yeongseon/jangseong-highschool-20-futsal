@@ -116,6 +116,45 @@
     board.style.placeItems = 'stretch';
   }
 
+  // 공지 팝업. '오늘 하루 보지 않기'를 누르면 그날(한국 시간)은 다시 띄우지 않는다.
+  const notice = e.notice;
+  const hideKey = notice && `notice-hidden:${notice.id}`;
+  let hiddenOn = null;
+  try { hiddenOn = notice && localStorage.getItem(hideKey); } catch {}
+  if (notice && hiddenOn !== todayISO) {
+    const modal = document.createElement('div');
+    modal.className = 'notice';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-labelledby', 'noticeTitle');
+    const esc = (t) => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+    modal.innerHTML = `
+      <div class="notice-card">
+        <button class="notice-x" type="button" aria-label="닫기">×</button>
+        <span class="notice-kicker">🎉 ${esc(notice.kicker)}</span>
+        ${notice.photo ? `<img class="notice-photo" src="./${notice.photo}" alt="" />` : ''}
+        <h3 id="noticeTitle">${esc(notice.title)}</h3>
+        <p>${esc(notice.body).replace(/\n/g, '<br/>')}</p>
+        ${notice.footer ? `<p class="notice-footer">${esc(notice.footer)}</p>` : ''}
+        <div class="notice-actions">
+          <button class="notice-today" type="button">오늘 하루 보지 않기</button>
+          <button class="notice-close" type="button">닫기</button>
+        </div>
+      </div>`;
+    const close = () => { modal.remove(); document.removeEventListener('keydown', onKey); };
+    const onKey = (ev) => { if (ev.key === 'Escape') close(); };
+    modal.addEventListener('click', (ev) => { if (ev.target === modal) close(); });
+    modal.querySelector('.notice-x').addEventListener('click', close);
+    modal.querySelector('.notice-close').addEventListener('click', close);
+    modal.querySelector('.notice-today').addEventListener('click', () => {
+      try { localStorage.setItem(hideKey, todayISO); } catch {}
+      close();
+    });
+    document.addEventListener('keydown', onKey);
+    document.body.appendChild(modal);
+    modal.querySelector('.notice-close').focus();
+  }
+
   const obs = new IntersectionObserver(entries => {
     entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
   }, { threshold:.12 });
