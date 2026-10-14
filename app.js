@@ -64,6 +64,7 @@
     });
   } else {
     draftMessage.textContent = `${players.length}명 준비 완료 · 클릭할 때마다 밸런스를 다시 계산합니다.`;
+    renderRoster();
     draftButton.addEventListener('click', () => {
       const shuffled = [...players].sort(() => Math.random() - .5);
       const teams = [[], []], totals = [0, 0];
@@ -78,6 +79,17 @@
     });
   }
 
+  // 팀을 나누기 전에는 참석자 전체 명단을 보여 준다
+  function renderRoster() {
+    const board = $('squadBoard');
+    const names = players.map(p => p.name).sort((a, b) => a.localeCompare(b, 'ko'));
+    board.innerHTML = `
+      <div class="roster">
+        <div class="roster-head"><b>참석자 ${names.length}명</b><span>팀 추천 후 팀별 라인업이 공개됩니다</span></div>
+        <ol class="roster-list">${names.map((n, i) => `<li><i>${String(i + 1).padStart(2, '0')}</i>${n}</li>`).join('')}</ol>
+      </div>`;
+  }
+
   function renderSquads(teams) {
     const board = $('squadBoard');
     board.innerHTML = teams.map((team, idx) => `
@@ -86,6 +98,7 @@
         ${team.map((p,n)=>`<div style="display:flex;justify-content:space-between;gap:18px;padding:11px 0;border-top:1px solid rgba(255,255,255,.12);font-size:13px"><b>${String(n+1).padStart(2,'0')}</b><span>${p.name}</span></div>`).join('')}
       </div>`).join('');
     board.style.gridTemplateColumns = '1fr 1fr';
+    board.style.placeItems = 'stretch';
   }
 
   const obs = new IntersectionObserver(entries => {

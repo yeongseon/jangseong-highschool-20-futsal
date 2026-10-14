@@ -17,7 +17,25 @@ window.JS20_DATA = {
         { id: 'green', name: '그린팀', short: 'GREEN', score: null },
         { id: 'white', name: '화이트팀', short: 'WHITE', score: null }
       ],
-      players: [],
+      // 참석자 16명 (단톡방 참석 명단 기준)
+      players: [
+        { name: '최영선', rating: 1 },
+        { name: '공영호', rating: 1 }, // 단톡방 이름 ㄱ영오
+        { name: '고재준', rating: 1 },
+        { name: '김동진', rating: 1 },
+        { name: '김상명', rating: 1 },
+        { name: '김성렬', rating: 1 },
+        { name: '김승현', rating: 1 },
+        { name: '김영수', rating: 1 },
+        { name: '김철민', rating: 1 },
+        { name: '김현수', rating: 1 },
+        { name: '박준철', rating: 1 },
+        { name: '서인원', rating: 1 },
+        { name: '최동영', rating: 1 },
+        { name: '최세호', rating: 1 },
+        { name: '최현석', rating: 1 },
+        { name: '한승효', rating: 1 }
+      ],
       awards: {
         champion: null,
         goldenBoot: null,
