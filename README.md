@@ -1,8 +1,8 @@
 # 장성고등학교 20회 2026 풋살컵
 
-🌐 **사이트:** https://yeongseon.github.io/js20-futsal/
+🌐 **사이트:** https://yeongseon.github.io/jangseong-highschool-20-futsal/
 
-📦 **저장소:** https://github.com/yeongseon/js20-futsal
+📦 **저장소:** https://github.com/yeongseon/jangseong-highschool-20-futsal
 
 장성고등학교 20회 졸업생 연례 풋살대회 공식(?) 사이트.
 
