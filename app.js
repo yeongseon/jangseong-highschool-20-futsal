@@ -45,6 +45,16 @@
 
   const sponsorLink = $('sponsorLink');
   if (sponsorLink) sponsorLink.href = e.sponsor.url;
+  const sponsors = Array.isArray(e.sponsors) ? e.sponsors : [];
+  const sponsorList = $('sponsorList');
+  if (sponsorList && sponsors.length) {
+    sponsorList.innerHTML = sponsors.map(s => `
+      <a class="sponsor-card" href="${s.url}" target="_blank" rel="noopener noreferrer">
+        <span class="sponsor-icon" aria-hidden="true">${s.icon || '◆'}</span>
+        <div><small>${s.type}</small><strong>${s.name}</strong>${s.branch ? `<em>${s.branch}</em>` : ''}</div>
+        <b>↗</b>
+      </a>`).join('');
+  } else $('sponsorMore')?.remove();
 
   const awards = [
     ['champion', 0], ['goldenBoot', 1], ['assistKing', 2], ['mvp', 3]

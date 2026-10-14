@@ -54,6 +54,15 @@ window.JS20_DATA = {
         brand: 'FRESH PODO',
         url: 'https://m.smartstore.naver.com/fresh_podo'
       },
+      // 함께 후원해 주신 곳 (공식 후원 아래에 표시)
+      sponsors: [
+        { icon: '🍲', type: '감자탕 · 등갈비', name: '등뼈감자탕&등갈비', branch: '월산점',
+          url: 'https://search.naver.com/search.naver?query=%EB%93%B1%EB%BC%88%EA%B0%90%EC%9E%90%ED%83%95%26%EB%93%B1%EA%B0%88%EB%B9%84+%EC%9B%94%EC%82%B0%EC%A0%90' },
+        { icon: '🍲', type: '감자탕 · 등갈비', name: '등뼈감자탕&등갈비', branch: '중흥점',
+          url: 'https://search.naver.com/search.naver?query=%EB%93%B1%EB%BC%88%EA%B0%90%EC%9E%90%ED%83%95%26%EB%93%B1%EA%B0%88%EB%B9%84+%EC%A4%91%ED%9D%A5%EC%A0%90' },
+        { icon: '🩺', type: '소아청소년과', name: '코코소아청소년과의원', branch: '',
+          url: 'https://short.ddocdoc.com/3i88ju' }
+      ],
       // 사이트에 들어오면 뜨는 공지 팝업. 필요 없으면 null.
       notice: {
         id: '2026-han-seunghyo-promotion',
