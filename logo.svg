@@ -1,18 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-labelledby="title desc">
-  <title id="title">JS20 Futsal Cup crest</title>
-  <desc id="desc">Original green tournament crest for the Jangseong High School 20th graduating class alumni futsal event.</desc>
+  <title id="title">JS20 Futsal Cup emblem</title>
+  <desc id="desc">Trophy emblem for the Jangseong High School 20th graduating class alumni futsal cup.</desc>
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#00b85a"/>
-      <stop offset="1" stop-color="#006d34"/>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#b8860b"/><stop offset=".35" stop-color="#ffe27a"/><stop offset=".6" stop-color="#f2c230"/><stop offset="1" stop-color="#a87406"/>
     </linearGradient>
+    <clipPath id="ballClip"><circle cx="160" cy="84" r="42"/></clipPath>
   </defs>
-  <path d="M160 16 286 60v96c0 77-48 126-126 148C82 282 34 233 34 156V60z" fill="#03180e" stroke="#b9ff4b" stroke-width="8"/>
-  <path d="M160 32 268 70v84c0 65-39 106-108 128-69-22-108-63-108-128V70z" fill="url(#g)"/>
-  <path d="M75 197c29-23 58-33 85-33s56 10 85 33" fill="none" stroke="#d8ff95" stroke-width="8" stroke-linecap="round" opacity=".75"/>
-  <circle cx="160" cy="163" r="21" fill="none" stroke="#d8ff95" stroke-width="8"/>
-  <path d="M160 81v61M95 163h44M181 163h44" stroke="#d8ff95" stroke-width="7" stroke-linecap="round" opacity=".8"/>
-  <text x="160" y="116" text-anchor="middle" fill="#fff" font-family="Arial Black,Arial,sans-serif" font-size="48" font-weight="900" letter-spacing="-2">JS20</text>
-  <text x="160" y="243" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="24" font-weight="800" letter-spacing="5">FUTSAL</text>
-  <text x="160" y="270" text-anchor="middle" fill="#b9ff4b" font-family="Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="4">ALUMNI CUP</text>
+  <g clip-path="url(#ballClip)">
+    <circle cx="160" cy="84" r="42" fill="#fff"/>
+    <polygon points="165.3,34.7 168.6,44.8 160.0,51.0 151.4,44.8 154.7,34.7" fill="#07110c"/><polygon points="208.5,73.8 199.9,80.0 191.4,73.8 194.7,63.7 205.2,63.7" fill="#07110c"/><polygon points="184.7,127.0 176.1,120.8 179.4,110.7 190.0,110.7 193.2,120.8" fill="#07110c"/><polygon points="126.8,120.8 130.0,110.7 140.6,110.7 143.9,120.8 135.3,127.0" fill="#07110c"/><polygon points="114.8,63.7 125.3,63.7 128.6,73.8 120.1,80.0 111.5,73.8" fill="#07110c"/>
+    <path d="M160.0 69.0L160.0 42.0M174.3 79.4L199.9 71.0M168.8 96.1L184.7 118.0M151.2 96.1L135.3 118.0M145.7 79.4L120.1 71.0" stroke="#07110c" stroke-width="3"/>
+    <polygon points="160.0,69.0 174.3,79.4 168.8,96.1 151.2,96.1 145.7,79.4" fill="#07110c"/>
+  </g>
+  <circle cx="160" cy="84" r="42" fill="none" stroke="#07110c" stroke-width="3"/>
+  <path d="M104 132C80 128 70 146 78 162c7 14 24 20 40 20" fill="none" stroke="url(#gold)" stroke-width="9" stroke-linecap="round"/>
+  <path d="M216 132c24-4 34 14 26 30-7 14-24 20-40 20" fill="none" stroke="url(#gold)" stroke-width="9" stroke-linecap="round"/>
+  <path d="M96 116H224C224 166 202 194 174 202V220H146V202C118 194 96 166 96 116Z" fill="url(#gold)" stroke="#7a5200" stroke-width="2.5"/>
+  <path d="M112 124c2 30 14 52 32 62" fill="none" stroke="#fff6c8" stroke-width="5" stroke-linecap="round" opacity=".7"/>
+  <path d="M132 220H188L198 242H122Z" fill="url(#gold)" stroke="#7a5200" stroke-width="2.5"/>
+  <rect x="104" y="242" width="112" height="30" rx="5" fill="#009240" stroke="#b9ff4b" stroke-width="3"/>
+  <text x="160" y="265" text-anchor="middle" fill="#fff" font-family="Arial Black,Arial,sans-serif" font-size="22" font-weight="900" letter-spacing="2">2026</text>
+  <text x="160" y="304" text-anchor="middle" fill="#b9ff4b" font-family="Arial Black,Arial,sans-serif" font-size="21" font-weight="900" letter-spacing="1">JS20 FUTSAL CUP</text>
 </svg>
