@@ -49,14 +49,10 @@ window.JS20_DATA = {
         mvp: null,
         goldenGlove: null
       },
-      sponsor: {
-        name: '신선포도농원',
-        brand: 'FRESH PODO',
-        url: 'https://blog.naver.com/fresh_podo',
-        logo: 'sponsors/fresh-podo.png'
-      },
-      // 함께 후원해 주신 곳 (공식 후원 아래에 표시)
+      // 후원해 주신 곳. 모두 같은 크기로 나란히 보여 준다.
       sponsors: [
+        { logo: 'sponsors/fresh-podo.png', type: '샤인머스캣 · 포도', name: '신선포도농원', branch: 'FRESH PODO',
+          url: 'https://blog.naver.com/fresh_podo' },
         { logo: 'sponsors/deungppyeo.svg', type: '감자탕 · 등갈비', name: '등뼈감자탕&등갈비', branch: '월산점',
           url: 'https://search.naver.com/search.naver?query=%EB%93%B1%EB%BC%88%EA%B0%90%EC%9E%90%ED%83%95%26%EB%93%B1%EA%B0%88%EB%B9%84+%EC%9B%94%EC%82%B0%EC%A0%90' },
         { logo: 'sponsors/deungppyeo.svg', type: '감자탕 · 등갈비', name: '등뼈감자탕&등갈비', branch: '중흥점',

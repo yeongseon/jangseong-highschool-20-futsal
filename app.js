@@ -43,8 +43,6 @@
         : `D+${Math.abs(days)}`;
   set('daysLeft', dday);
 
-  const sponsorLink = $('sponsorLink');
-  if (sponsorLink) sponsorLink.href = e.sponsor.url;
   const sponsors = Array.isArray(e.sponsors) ? e.sponsors : [];
   const sponsorList = $('sponsorList');
   if (sponsorList && sponsors.length) {
