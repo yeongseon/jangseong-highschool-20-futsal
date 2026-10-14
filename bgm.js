@@ -64,7 +64,12 @@
     }
   }
 
+  const running = () => !!ctx && ctx.state === 'running';
+
+  // 반드시 사용자 입력 처리 중에 불러야 한다 (모바일은 그때만 소리를 허용한다)
   function start() {
+    // iOS는 기본적으로 무음 스위치를 켜 두면 Web Audio 소리도 끈다. 음악 재생으로 알려 두면 그대로 나온다.
+    try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch {}
     if (!ctx) {
       const AC = window.AudioContext || window.webkitAudioContext;
       if (!AC) { btn.hidden = true; return; }
@@ -75,8 +80,15 @@
       next = 0;
       at = ctx.currentTime + 0.1;
     }
-    ctx.resume().then(render);
+    // iOS Safari는 입력 처리 중에 실제로 소리를 한 번 내야 풀린다. 들리지 않는 아주 짧은 소리를 낸다.
+    const silent = ctx.createBufferSource();
+    silent.buffer = ctx.createBuffer(1, 1, 22050);
+    silent.connect(ctx.destination);
+    silent.start(0);
+    const resumed = ctx.resume();
+    if (resumed) resumed.then(render, render);
     if (!timer) timer = setInterval(schedule, 100);
+    render();
   }
 
   function stop() {
@@ -88,19 +100,21 @@
   }
 
   btn.addEventListener('click', () => {
-    on = !(on && timer);
+    on = !(on && running());
     try { localStorage.setItem('bgm', on ? '1' : '0'); } catch {}
     on ? start() : stop();
     render();
   });
 
-  // 버튼을 누른 경우는 위의 click에서 처리한다
-  const unlock = (ev) => { if (on && !timer && ev.target !== btn) start(); };
-  addEventListener('pointerdown', unlock);
-  addEventListener('keydown', unlock);
+  // 아직 소리가 안 나고 있으면 입력이 올 때마다 다시 시도한다. 버튼을 누른 경우는 위의 click에서 처리한다.
+  // 모바일 브라우저는 touchstart·pointerdown을 소리 허용 입력으로 치지 않아서 touchend와 click을 쓴다.
+  const unlock = (ev) => { if (on && !running() && !btn.contains(ev.target)) start(); };
+  ['touchend', 'click', 'keydown'].forEach((type) => addEventListener(type, unlock, { capture: true, passive: true }));
   document.addEventListener('visibilitychange', () => {
     if (!ctx) return;
+    // iOS는 다른 앱에 다녀오면 'interrupted' 상태가 되므로 돌아왔을 때 다시 깨운다
     document.hidden ? ctx.suspend() : on && ctx.resume();
+    render();
   });
   render();
 })();
