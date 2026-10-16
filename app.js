@@ -73,7 +73,8 @@
 
   const draftButton = $('draftButton');
   const draftMessage = $('draftMessage');
-  const players = Array.isArray(e.players) ? e.players : [];
+  const roster = Array.isArray(e.players) ? e.players : [];
+  const players = roster.filter(p => !p.out); // 결장 선수는 팀을 나눌 때 뺀다
   if (!players.length) {
     draftButton.disabled = false;
     draftButton.addEventListener('click', () => {
@@ -101,16 +102,20 @@
   // 팀을 나누기 전에는 참석자 전체 명단을 보여 준다
   function renderRoster() {
     const board = $('squadBoard');
-    const sorted = [...players].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
+    const byName = (a, b) => a.name.localeCompare(b.name, 'ko');
+    const sorted = [...players].sort(byName).concat(roster.filter(p => p.out).sort(byName));
+    const outCount = roster.length - players.length;
     board.innerHTML = `
       <div class="roster">
-        <div class="roster-head"><b>참석자 ${sorted.length}명</b><span>팀 추천 후 팀별 라인업이 공개됩니다</span></div>
-        <ol class="roster-list">${sorted.map((p, i) => `<li>${face(p)}<i>${String(i + 1).padStart(2, '0')}</i>${p.name}</li>`).join('')}</ol>
+        <div class="roster-head"><b>참석자 ${players.length}명${outCount ? ` · 결장 ${outCount}명` : ''}</b><span>팀 추천 후 팀별 라인업이 공개됩니다</span></div>
+        <ol class="roster-list">${sorted.map((p, i) => `<li${p.out ? ' class="out"' : ''}>${face(p)}<i>${p.out ? 'OUT' : String(i + 1).padStart(2, '0')}</i>${p.name}${p.out ? `<em class="out-tag${p.out === '부상' ? '' : ' plain'}">${p.out === '부상' ? '🚑 ' : ''}${p.out}</em>` : ''}</li>`).join('')}</ol>
       </div>`;
   }
 
   function face(p) {
-    return p.photo ? `<img class="face" src="./${p.photo}" alt="" loading="lazy" />` : '';
+    if (!p.photo) return '';
+    const img = `<img class="face" src="./${p.photo}" alt="" loading="lazy" />`;
+    return p.out ? `<span class="face-out" title="${p.out}">${img}${p.out === '부상' ? '<b aria-hidden="true">+</b>' : ''}</span>` : img;
   }
 
   function renderSquads(teams) {
