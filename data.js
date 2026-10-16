@@ -61,14 +61,23 @@ window.JS20_DATA = {
           url: 'https://short.ddocdoc.com/3i88ju' }
       ],
       // 사이트에 들어오면 뜨는 공지 팝업. 필요 없으면 null.
-      notice: {
-        id: '2026-han-seunghyo-promotion',
-        kicker: '축하합니다',
-        title: '한승효 경감 승진',
-        photo: 'notice/han-seunghyo-promotion.jpg',
-        body: '우리 20회 한승효가 경감으로 승진했습니다.\n2026년 10월 1일(목) 승진임용식',
-        footer: '풋살컵에서 다 같이 축하해 줍시다!'
-      },
+      notices: [
+        {
+          id: '2026-han-seunghyo-promotion',
+          kicker: '축하합니다',
+          title: '한승효 경감 승진',
+          photo: 'notice/han-seunghyo-promotion.jpg',
+          body: '우리 20회 한승효가 경감으로 승진했습니다.\n2026년 10월 1일(목) 승진임용식'
+        },
+        {
+          id: '2026-kim-sangmyeong-baby',
+          kicker: '축하합니다',
+          title: '김상명 아빠 됐다',
+          emoji: '👶',
+          body: '우리 20회 김상명이 아빠가 됐습니다.\n아기와 엄마의 건강을 함께 빌어 줍시다.'
+        }
+      ],
+      noticeFooter: '풋살컵에서 다 같이 축하해 줍시다!',
       president: {
         title: '풋살컵 회장',
         name: '박준철'

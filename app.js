@@ -125,25 +125,29 @@
   }
 
   // 공지 팝업. '오늘 하루 보지 않기'를 누르면 그날(한국 시간)은 다시 띄우지 않는다.
-  const notice = e.notice;
-  const hideKey = notice && `notice-hidden:${notice.id}`;
+  const notices = e.notices || [];
+  const hideKey = `notice-hidden:${notices.map(n => n.id).join('+')}`;
   let hiddenOn = null;
-  try { hiddenOn = notice && localStorage.getItem(hideKey); } catch {}
-  if (notice && hiddenOn !== todayISO) {
+  try { hiddenOn = localStorage.getItem(hideKey); } catch {}
+  if (notices.length && hiddenOn !== todayISO) {
     const modal = document.createElement('div');
     modal.className = 'notice';
     modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-modal', 'true');
-    modal.setAttribute('aria-labelledby', 'noticeTitle');
+    modal.setAttribute('aria-label', '공지사항');
     const esc = (t) => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
     modal.innerHTML = `
-      <div class="notice-card">
+      <div class="notice-card${notices.length > 1 ? ' multi' : ''}">
         <button class="notice-x" type="button" aria-label="닫기">×</button>
-        <span class="notice-kicker">🎉 ${esc(notice.kicker)}</span>
-        ${notice.photo ? `<img class="notice-photo" src="./${notice.photo}" alt="" />` : ''}
-        <h3 id="noticeTitle">${esc(notice.title)}</h3>
-        <p>${esc(notice.body).replace(/\n/g, '<br/>')}</p>
-        ${notice.footer ? `<p class="notice-footer">${esc(notice.footer)}</p>` : ''}
+        ${notices.map(n => `
+          <section class="notice-item">
+            <span class="notice-kicker">🎉 ${esc(n.kicker)}</span>
+            ${n.photo ? `<img class="notice-photo" src="./${n.photo}" alt="" />` : ''}
+            ${n.emoji ? `<div class="notice-photo notice-emoji" aria-hidden="true">${esc(n.emoji)}</div>` : ''}
+            <h3>${esc(n.title)}</h3>
+            <p>${esc(n.body).replace(/\n/g, '<br/>')}</p>
+          </section>`).join('')}
+        ${e.noticeFooter ? `<p class="notice-footer">${esc(e.noticeFooter)}</p>` : ''}
         <div class="notice-actions">
           <button class="notice-today" type="button">오늘 하루 보지 않기</button>
           <button class="notice-close" type="button">닫기</button>
@@ -160,7 +164,7 @@
     });
     document.addEventListener('keydown', onKey);
     document.body.appendChild(modal);
-    modal.querySelector('.notice-close').focus();
+    modal.querySelector('.notice-close').focus({ preventScroll: true });
   }
 
   const obs = new IntersectionObserver(entries => {
