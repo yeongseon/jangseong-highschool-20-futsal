@@ -73,7 +73,7 @@ window.JS20_DATA = {
           id: '2026-kim-sangmyeong-baby',
           kicker: '축하합니다',
           title: '김상명 아빠 됐다',
-          emoji: '👶',
+          photo: 'notice/kim-sangmyeong.png',
           body: '우리 20회 김상명이 아빠가 됐습니다.\n아기와 엄마의 건강을 함께 빌어 줍시다.'
         }
       ],
