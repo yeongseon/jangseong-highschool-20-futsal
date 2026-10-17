@@ -16,12 +16,43 @@
   set('teamBName', e.teams[1].name);
   set('teamACode', e.teams[0].short);
   set('teamBCode', e.teams[1].short);
+  set('draftTeamA', e.teams[0].name);
+  set('draftTeamB', e.teams[1].name);
   set('matchKickoff', e.kickoff || '미정');
   set('matchVenue', e.venue || '세종풋살파크');
   set('matchDate', e.dateLabel.replace(String(e.year), '').trim());
 
   const status = e.phase === 'post' ? '경기 종료' : e.phase === 'live' ? '경기 중' : '경기 예정';
   set('statusPill', status);
+
+  const photos = Array.isArray(e.photos) ? e.photos : [];
+  const photoGrid = $('photoGrid');
+  if (photoGrid && photos.length) {
+    photos.forEach(photo => {
+      const figure = document.createElement('figure');
+      figure.className = 'photo-card reveal';
+      const link = document.createElement('a');
+      link.href = `./${photo.src}`;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.setAttribute('aria-label', `${photo.caption} 크게 보기 (새 탭)`);
+      const img = document.createElement('img');
+      img.src = `./${photo.src}`;
+      img.alt = photo.alt;
+      img.width = 1200;
+      img.height = 1600;
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      const caption = document.createElement('figcaption');
+      caption.textContent = photo.caption;
+      link.appendChild(img);
+      figure.append(link, caption);
+      photoGrid.appendChild(figure);
+    });
+    $('photos').hidden = false;
+  } else {
+    document.querySelector('.nav a[href="#photos"]')?.remove();
+  }
 
   // Calendar-day D-Day calculation in Korea Standard Time (Asia/Seoul).
   // This keeps the count stable for the whole local day on static GitHub Pages.
@@ -42,6 +73,15 @@
         ? `D-${days}`
         : `D+${Math.abs(days)}`;
   set('daysLeft', dday);
+  if (e.phase === 'post') {
+    document.querySelector('.countdown-kicker').textContent = '경기 종료';
+    document.querySelector('#countdown > span:last-child').textContent = '함께 뛴 하루';
+    document.querySelector('.edition-card p').textContent = `${e.dateLabel} · 경기 종료`;
+    document.querySelectorAll('.team p').forEach((el, i) => {
+      el.textContent = e.awards.champion === e.teams[i].name ? '우승' : '함께 뛴 팀';
+    });
+    if (!e.kickoff || e.kickoff === '미정') document.querySelector('.match-time').hidden = true;
+  }
 
   const sponsors = Array.isArray(e.sponsors) ? e.sponsors : [];
   const sponsorList = $('sponsorList');
@@ -74,8 +114,22 @@
   const draftButton = $('draftButton');
   const draftMessage = $('draftMessage');
   const roster = Array.isArray(e.players) ? e.players : [];
-  const players = roster.filter(p => !p.out); // 결장 선수는 팀을 나눌 때 뺀다
-  if (!players.length) {
+  const activePlayers = roster.filter(p => !p.out);
+  const jokers = activePlayers.filter(p => p.joker);
+  const players = activePlayers.filter(p => !p.joker); // 부상·결장 선수와 깍두기는 고정 팀 편성에서 뺀다
+  const jokerNote = jokers.length ? ` · 깍두기: ${jokers.map(p => p.name).join(', ')}` : '';
+  const confirmedTeams = e.teams.every(team => Array.isArray(team.players))
+    ? e.teams.map(team => team.players.map(name => players.find(p => p.name === name)).filter(Boolean))
+    : null;
+  if (confirmedTeams) {
+    renderSquads(confirmedTeams);
+    document.querySelectorAll('.draft-side').forEach((side, i) => {
+      side.innerHTML = `<b>${e.teams[i].name}</b>${confirmedTeams[i].map(p => `<span>${p.name}</span>`).join('')}`;
+    });
+    draftButton.textContent = '확정 라인업 보기 ↘';
+    draftMessage.textContent = `${e.teams.map((team, i) => `${team.name} ${confirmedTeams[i].length}명`).join(' · ')}${jokerNote}`;
+    draftButton.addEventListener('click', () => $('squads').scrollIntoView({ behavior:'smooth' }));
+  } else if (!players.length) {
     draftButton.disabled = false;
     draftButton.addEventListener('click', () => {
       draftMessage.textContent = '라인업 대기 중 — 선수 명단이 들어오면 실제 팀 추천을 실행합니다.';
@@ -83,7 +137,7 @@
       setTimeout(() => { draftButton.innerHTML = '팀 추천하기 <span>↻</span>'; }, 1700);
     });
   } else {
-    draftMessage.textContent = `${players.length}명 준비 완료 · 클릭할 때마다 밸런스를 다시 계산합니다.`;
+    draftMessage.textContent = `${players.length}명 팀 편성${jokerNote} · 클릭할 때마다 밸런스를 다시 계산합니다.`;
     renderRoster();
     draftButton.addEventListener('click', () => {
       const shuffled = [...players].sort(() => Math.random() - .5);
@@ -93,7 +147,7 @@
         const t = totals[0] <= totals[1] ? 0 : 1;
         teams[t].push(p); totals[t] += p.rating || 1;
       });
-      draftMessage.textContent = `추천 완료 · 그린팀 ${totals[0]} : 화이트팀 ${totals[1]} · 최종 확정 전 다시 추천할 수 있습니다.`;
+      draftMessage.textContent = `추천 완료 · ${e.teams[0].name} ${totals[0]} : ${e.teams[1].name} ${totals[1]}${jokerNote} · 최종 확정 전 다시 추천할 수 있습니다.`;
       renderSquads(teams);
       document.querySelector('#squads').scrollIntoView({ behavior:'smooth' });
     });
@@ -103,12 +157,12 @@
   function renderRoster() {
     const board = $('squadBoard');
     const byName = (a, b) => a.name.localeCompare(b.name, 'ko');
-    const sorted = [...players].sort(byName).concat(roster.filter(p => p.out).sort(byName));
-    const outCount = roster.length - players.length;
+    const sorted = [...activePlayers].sort(byName).concat(roster.filter(p => p.out).sort(byName));
+    const outCount = roster.length - activePlayers.length;
     board.innerHTML = `
       <div class="roster">
-        <div class="roster-head"><b>참석자 ${players.length}명${outCount ? ` · 결장 ${outCount}명` : ''}</b><span>팀 추천 후 팀별 라인업이 공개됩니다</span></div>
-        <ol class="roster-list">${sorted.map((p, i) => `<li${p.out ? ' class="out"' : ''}>${face(p)}<i>${p.out ? 'OUT' : String(i + 1).padStart(2, '0')}</i>${p.name}${p.out ? `<em class="out-tag${p.out === '부상' ? '' : ' plain'}">${p.out === '부상' ? '🚑 ' : ''}${p.out}</em>` : ''}</li>`).join('')}</ol>
+        <div class="roster-head"><b>참석자 ${activePlayers.length}명${outCount ? ` · 부상·결장 ${outCount}명` : ''}</b><span>팀 추천 후 팀별 라인업이 공개됩니다</span></div>
+        <ol class="roster-list">${sorted.map((p, i) => `<li${p.out ? ' class="out"' : ''}>${face(p)}<i>${p.out ? 'OUT' : String(i + 1).padStart(2, '0')}</i>${p.name}${p.joker ? '<em class="joker-tag">깍두기</em>' : ''}${p.out ? `<em class="out-tag${p.out === '부상' ? '' : ' plain'}">${p.out === '부상' ? '🚑 ' : ''}${p.out}</em>` : ''}</li>`).join('')}</ol>
       </div>`;
   }
 
@@ -121,12 +175,16 @@
   function renderSquads(teams) {
     const board = $('squadBoard');
     board.innerHTML = teams.map((team, idx) => `
-      <div style="padding:28px;min-width:0;">
-        <div style="font:900 12px/1 Arial;letter-spacing:2px;color:${idx===0?'#b9ff4b':'#fff'};margin-bottom:18px">${idx===0?'그린팀':'화이트팀'}</div>
-        ${team.map((p,n)=>`<div style="display:flex;justify-content:space-between;align-items:center;gap:18px;padding:11px 0;border-top:1px solid rgba(255,255,255,.12);font-size:13px"><b>${String(n+1).padStart(2,'0')}</b><span style="display:flex;align-items:center;gap:12px">${face(p)}${p.name}</span></div>`).join('')}
-      </div>`).join('');
-    board.style.gridTemplateColumns = '1fr 1fr';
-    board.style.placeItems = 'stretch';
+      <article class="squad-team ${e.teams[idx].id}">
+        <h3>${e.teams[idx].name}${e.awards.champion === e.teams[idx].name ? ' · 우승' : ''}</h3>
+        <p>${e.teams[idx].short} · ${team.length}명</p>
+        <ol class="squad-players">${team.map(p => `<li>${face(p)}<b>${p.name}</b></li>`).join('')}</ol>
+      </article>`).join('');
+    const separate = roster.filter(p => p.joker || p.out);
+    if (separate.length) {
+      board.innerHTML += `<div class="squad-status"><h3>깍두기 · 부상 · 결장</h3><ul class="roster-list">${separate.map(p => `<li${p.out ? ' class="out"' : ''}>${face(p)}${p.name}<em class="${p.joker ? 'joker-tag' : `out-tag${p.out === '부상' ? '' : ' plain'}`}">${p.joker ? '깍두기' : p.out}</em></li>`).join('')}</ul></div>`;
+    }
+    board.classList.add('has-teams');
   }
 
   // 공지 팝업. '오늘 하루 보지 않기'를 누르면 그날(한국 시간)은 다시 띄우지 않는다.

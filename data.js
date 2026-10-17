@@ -11,27 +11,37 @@ window.JS20_DATA = {
       dateISO: '2026-10-17',
       kickoff: '미정',
       venue: '세종풋살파크',
-      phase: 'pre', // pre | live | post
+      phase: 'post', // pre | live | post
       tagline: '다시 모여, 다시 뛴다.',
+      photos: [
+        { src: 'photos/2026/05.jpg', caption: '함께 뛴 우리 · 1', alt: '2026년 10월 17일 세종풋살파크에서 주먹을 들고 촬영한 장성고 20회 전체 기념사진' },
+        { src: 'photos/2026/06.jpg', caption: '함께 뛴 우리 · 2', alt: '세종풋살파크에서 엄지를 들고 촬영한 장성고 20회 전체 기념사진' },
+        { src: 'photos/2026/01.jpg', caption: '한승효팀 · 그린 유니폼 · 1', alt: '그린 유니폼을 입고 나란히 서서 촬영한 한승효팀 여섯 명의 기념사진' },
+        { src: 'photos/2026/02.jpg', caption: '한승효팀 · 그린 유니폼 · 2', alt: '그린 유니폼을 입은 한승효팀 여섯 명이 엄지를 들고 촬영한 기념사진' },
+        { src: 'photos/2026/03.jpg', caption: '최세호팀 · 레드 가운 · 1', alt: '레드 가운을 입은 최세호팀 여섯 명이 팔짱을 끼고 촬영한 기념사진' },
+        { src: 'photos/2026/04.jpg', caption: '최세호팀 · 레드 가운 · 2', alt: '레드 가운을 입은 최세호팀이 풋살장에 나란히 서서 촬영한 기념사진' }
+      ],
       teams: [
-        { id: 'green', name: '그린팀', short: 'GREEN', score: null },
-        { id: 'white', name: '화이트팀', short: 'WHITE', score: null }
+        { id: 'red', name: '최세호팀', short: '레드 가운', score: null,
+          players: ['최세호', '박준철', '김철민', '김동진', '최영선', '최동영'] },
+        { id: 'green', name: '한승효팀', short: '그린 유니폼', score: null,
+          players: ['한승효', '고재준', '김상명', '김승현', '김현수', '최현석'] }
       ],
       // 단톡방 참석 명단 기준 16명. 사진은 졸업앨범 개인 사진. out('부상' 또는 '결장')이 있으면 흑백으로 표시하고 팀 추천에서 뺀다.
       players: [
         { name: '최영선', photo: 'players/3-7-34.jpg', rating: 1 },
-        { name: '공영호', photo: 'players/3-1-01.jpg', rating: 1 }, // 단톡방 이름 ㄱ영오
+        { name: '공영호', photo: 'players/3-1-01.jpg', rating: 1, joker: true }, // 단톡방 이름 ㄱ영오 · 깍두기
         { name: '고재준', photo: 'players/3-8-02.jpg', rating: 1 },
         { name: '김동진', photo: 'players/3-7-05.jpg', rating: 1 },
         { name: '김상명', photo: 'players/3-8-07.jpg', rating: 1 },
         { name: '김성렬', photo: 'players/3-8-08.jpg', rating: 1, out: '부상' },
         { name: '김승현', photo: 'players/3-8-09.jpg', rating: 1 },
-        { name: '김영수', photo: 'players/3-8-10.jpg', rating: 1 },
+        { name: '김영수', photo: 'players/3-8-10.jpg', rating: 1, out: '결장' },
         { name: '김철민', photo: 'players/3-7-10.jpg', rating: 1 },
         { name: '김현수', photo: 'players/3-8-16.jpg', rating: 1 },
         { name: '박준철', photo: 'players/3-7-16.jpg', rating: 1 },
-        { name: '서인원', photo: 'players/3-7-19.jpg', rating: 1 },
-        { name: '최동영', photo: 'players/3-7-33.jpg', rating: 1, out: '결장' },
+        { name: '서인원', photo: 'players/3-7-19.jpg', rating: 1, out: '부상' },
+        { name: '최동영', photo: 'players/3-7-33.jpg', rating: 1 },
         { name: '최세호', photo: 'players/3-8-37.jpg', rating: 1 },
         { name: '최현석', photo: 'players/3-7-36.jpg', rating: 1 },
         { name: '한승효', photo: 'players/3-1-36.jpg', rating: 1 }
@@ -43,10 +53,10 @@ window.JS20_DATA = {
         { title: '퀴즈 승리팀', amount: 90000, note: '쿠팡 1만원권 9장' }
       ],
       awards: {
-        champion: null,
-        goldenBoot: null,
+        champion: '한승효팀',
+        goldenBoot: '김동진',
         assistKing: null,
-        mvp: null,
+        mvp: '한승효',
         goldenGlove: null
       },
       // 후원해 주신 곳. 모두 같은 크기로 나란히 보여 준다.
