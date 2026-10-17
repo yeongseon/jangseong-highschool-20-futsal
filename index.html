@@ -61,7 +61,7 @@
           <div><small>경기일</small><strong id="dateLabel">17 OCT 2026</strong></div>
           <div><small>시작시간</small><strong id="kickoff">TBA</strong></div>
           <div><small>장소</small><strong>세종풋살파크</strong></div>
-          <div><small>경기방식</small><strong>2팀 · 1경기</strong></div>
+          <div><small>경기방식</small><strong id="matchFormat">2팀 · 4세트</strong></div>
         </div>
       </div>
       <div class="hero-mark reveal delay-1">
@@ -90,7 +90,7 @@
     <section class="section match-section" id="match">
       <div class="section-heading reveal">
         <div><span class="section-index">01</span><span class="kicker">경기</span></div>
-        <h2>단 한 경기.<br/>자존심은 전부.</h2>
+        <h2>끝까지 뛰고,<br/>함께 남긴 기록.</h2>
       </div>
       <div class="match-card reveal">
         <div class="match-status"><span class="status-pill" id="statusPill">경기 예정</span><span id="matchVenue">세종풋살파크</span></div>
@@ -103,7 +103,8 @@
           </article>
           <div class="vs-center">
             <span class="match-date" id="matchDate">17 OCT</span>
-            <strong>VS</strong>
+            <strong id="matchScore">VS</strong>
+            <span class="match-sets" id="matchSets" hidden></span>
             <span class="match-time">시작 <b id="matchKickoff">TBA</b></span>
           </div>
           <article class="team team-b">
@@ -173,8 +174,9 @@
         <article class="award-card"><span class="award-icon">⚽</span><small>득점왕</small><b>—</b><p>최다 득점</p></article>
         <article class="award-card"><span class="award-icon">↗</span><small>도움왕</small><b>—</b><p>최다 도움</p></article>
         <article class="award-card sponsor-award"><span class="award-icon">◆</span><small>MVP</small><b>—</b><p>경기 MVP</p></article>
+        <article class="award-card"><span class="award-icon">👏</span><small>박수상</small><b>—</b><p>2026 박수상</p></article>
       </div>
-      <p class="award-note reveal">우승 · 한승효팀 / 득점왕 · 김동진 / MVP · 한승효</p>
+      <p class="award-note reveal" id="awardNote">우승 · 한승효팀 / 득점왕 · 김동진 / 도움왕 · 없음 / MVP · 김승현 / 박수상 · 한승효</p>
     </section>
 
     <section class="section photos-section" id="photos" aria-labelledby="photosTitle" hidden>

@@ -12,6 +12,7 @@ window.JS20_DATA = {
       kickoff: '미정',
       venue: '세종풋살파크',
       phase: 'post', // pre | live | post
+      setsPlayed: 4,
       tagline: '다시 모여, 다시 뛴다.',
       photos: [
         { src: 'photos/2026/05.jpg', caption: '함께 뛴 우리 · 1', alt: '2026년 10월 17일 세종풋살파크에서 주먹을 들고 촬영한 장성고 20회 전체 기념사진' },
@@ -22,9 +23,9 @@ window.JS20_DATA = {
         { src: 'photos/2026/04.jpg', caption: '최세호팀 · 레드 가운 · 2', alt: '레드 가운을 입은 최세호팀이 풋살장에 나란히 서서 촬영한 기념사진' }
       ],
       teams: [
-        { id: 'red', name: '최세호팀', short: '레드 가운', score: null,
+        { id: 'red', name: '최세호팀', short: '레드 가운', score: 8,
           players: ['최세호', '박준철', '김철민', '김동진', '최영선', '최동영'] },
-        { id: 'green', name: '한승효팀', short: '그린 유니폼', score: null,
+        { id: 'green', name: '한승효팀', short: '그린 유니폼', score: 9,
           players: ['한승효', '고재준', '김상명', '김승현', '김현수', '최현석'] }
       ],
       // 단톡방 참석 명단 기준 16명. 사진은 졸업앨범 개인 사진. out('부상' 또는 '결장')이 있으면 흑백으로 표시하고 팀 추천에서 뺀다.
@@ -55,8 +56,9 @@ window.JS20_DATA = {
       awards: {
         champion: '한승효팀',
         goldenBoot: '김동진',
-        assistKing: null,
-        mvp: '한승효',
+        assistKing: '없음',
+        mvp: '김승현',
+        applause: '한승효',
         goldenGlove: null
       },
       // 후원해 주신 곳. 모두 같은 크기로 나란히 보여 준다.

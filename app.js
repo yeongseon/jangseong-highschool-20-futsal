@@ -21,6 +21,15 @@
   set('matchKickoff', e.kickoff || '미정');
   set('matchVenue', e.venue || '세종풋살파크');
   set('matchDate', e.dateLabel.replace(String(e.year), '').trim());
+  if (e.teams.every(team => Number.isFinite(team.score))) {
+    set('matchScore', `${e.teams[0].score} : ${e.teams[1].score}`);
+    $('matchScore').setAttribute('aria-label', e.teams.map(team => `${team.name} ${team.score}점`).join(', '));
+  }
+  if (e.setsPlayed) {
+    set('matchFormat', `2팀 · ${e.setsPlayed}세트`);
+    set('matchSets', `${e.setsPlayed}세트 합산`);
+    $('matchSets').hidden = false;
+  }
 
   const status = e.phase === 'post' ? '경기 종료' : e.phase === 'live' ? '경기 중' : '경기 예정';
   set('statusPill', status);
@@ -95,10 +104,13 @@
   } else $('sponsorMore')?.remove();
 
   const awards = [
-    ['champion', 0], ['goldenBoot', 1], ['assistKing', 2], ['mvp', 3]
+    ['champion', 0, '우승'], ['goldenBoot', 1, '득점왕'], ['assistKing', 2, '도움왕'],
+    ['mvp', 3, 'MVP'], ['applause', 4, '박수상']
   ];
   const cards = Array.from(document.querySelectorAll('.award-card b'));
   awards.forEach(([key, i]) => { if (e.awards[key]) cards[i].textContent = e.awards[key]; });
+  set('awardNote', awards.filter(([key]) => e.awards[key] != null)
+    .map(([key, , label]) => `${label} · ${e.awards[key]}`).join(' / '));
 
   const prizes = Array.isArray(e.prizes) ? e.prizes : [];
   const prizeBoard = $('prizeBoard');
